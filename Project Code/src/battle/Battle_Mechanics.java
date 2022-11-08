@@ -28,12 +28,20 @@ public class Battle_Mechanics {
 		return damage;
 	}
 	
+	/* Checks the hp of a pokemon
+	 * Input: 	pokemon	- Pokemon to check
+	 * Returns: void
+	 */
 	public static boolean isFainted(Pokemon pokemon)
 	{
 		if(pokemon.getCurrent_hp() <= 0) return true;
 		return false;
 	}
 	
+	/* Checks/Updates the hp if a status effect persists
+	 * Input: 	pokemon	- Pokemon to check
+	 * Returns: void
+	 */
 	public static void postMoveStatusEffects(Pokemon pokemon)
 	{
 		// Update condition of left_pokemon (Poison / Burn Damage)
@@ -48,6 +56,7 @@ public class Battle_Mechanics {
 				pokemon.takeDamage(pokemon.getCurrent_max_hp() * 1/16);
 			}
 	}
+	
 	/* Determine if the pokemon is allowed to use a move
 	 * Input: 	user		- Pokemon in question
 	 * Returns: boolean 	- If the pokemon can use a move
@@ -245,6 +254,7 @@ public class Battle_Mechanics {
 				target.takeDamage(damage);
 			}
 		}
+		
 		// Move statistic effects
 		if (move instanceof ApplyStatChange)
 		{
@@ -349,6 +359,7 @@ public class Battle_Mechanics {
 	 * Returns: void
 	 */
 	private static void applyUserStatEffects(Pokemon user, Move move) {
+		
 		// TODO Auto-generated method stub
 		if (move instanceof UserAttackPlusOne || move instanceof UserAttackPlusTwo || move instanceof UserAttackMinusOne || move instanceof UserAttackMinusTwo)
 		{
@@ -638,7 +649,6 @@ public class Battle_Mechanics {
 		}
 	}
 
-
 	/* Apply statistic changes to the target
 	 * Input: 	target			- Target pokemon
 	 * 			move			- Move
@@ -646,6 +656,7 @@ public class Battle_Mechanics {
 	 */
 	public static void applyTargetStatEffects(Pokemon target, Move move) 
 	{
+	
 		if (move instanceof TargetAttackPlusOne || move instanceof TargetAttackPlusTwo || move instanceof TargetAttackMinusOne || move instanceof TargetAttackMinusTwo)
 		{
 			// Check is the min/max change has been reached
@@ -934,7 +945,11 @@ public class Battle_Mechanics {
 		}
 	}
 	
-	
+	/* Calculates the type move bonus based on the type relationship between move type and target type(s)
+	 * Input: 	target			- Target pokemon
+	 * 			move			- Move
+	 * Returns: void
+	 */
 	private static double getTypeMultiplier(Move move, Pokemon target) {
 		/*
 		if (console_info == true)
@@ -1195,6 +1210,5 @@ public class Battle_Mechanics {
 		
 		return type_bonus;
 	} // End of Method
-	
 	
 }

@@ -1,8 +1,14 @@
 package move.move_tree;
 
+import java.io.Serializable;
+
 import types.*;
 
-public class Move {
+public abstract class Move implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected int tm_no;
 	protected String name;
 	protected String type;
@@ -30,15 +36,13 @@ public class Move {
 		this.accuracy = c.accuracy;
 	}
 
-	public Move copy() {
-        return new Move(this);
-    }
+	public abstract Move copy();
 	
 	public void displayMoveInformation()
 	{
-		System.out.print("\t" + this.name + " ");
-		if(this instanceof Normal) System.out.print(" Normal ");
-		System.out.println(this.current_pp + " / " + this.max_pp);
+		System.out.print("\t" + this.current_pp + " / " + this.max_pp + "\t");
+		System.out.println(this.name + " ");
+		//if(this instanceof Normal) System.out.print(" Normal ");
 	}
 	// Setters and Getters
 	public int getTm_no() {

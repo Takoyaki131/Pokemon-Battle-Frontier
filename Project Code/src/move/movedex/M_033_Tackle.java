@@ -6,6 +6,11 @@ import types.Normal;
 
 public class M_033_Tackle extends AttackMove implements PhysicalAttack, Normal{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public M_033_Tackle() {
 		super(33, "Tackle", 30, 1, 35);
 		// TODO Auto-generated constructor stub

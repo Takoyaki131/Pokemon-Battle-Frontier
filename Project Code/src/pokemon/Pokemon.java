@@ -2,11 +2,12 @@ package pokemon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import move.move_tree.Move;
 import types.*;
 
-public class Pokemon implements Serializable{
+public abstract class Pokemon implements Serializable{
 	/**
 	 * 
 	 */
@@ -72,41 +73,47 @@ public class Pokemon implements Serializable{
 	protected String battle_status = null;
 	
 	// Constructor used in initial startup
-	public Pokemon(int pokedex_number, String name, int base_max_hp, int base_attack, int base_defense,
-			int base_special_attack, int base_special_defense, int base_speed) {
-		super();
-		this.pokedex_number = pokedex_number;
-		this.name = name;
-		this.nickname = name;
-		this.base_max_hp = base_max_hp;
-		this.base_attack = base_attack;
-		this.base_defense = base_defense;
-		this.base_special_attack = base_special_attack;
-		this.base_special_defense = base_special_defense;
-		this.base_speed = base_speed;
-		
-	}
-
-	// Copy Constructor used when adding to a party
-	public Pokemon(Pokemon c)
+	public Pokemon()
 	{
-		this.pokedex_number = c.pokedex_number;
-		this.name = c.name;
-		this.base_max_hp = c.base_max_hp;
-		this.base_attack = c.base_attack;
-		this.base_defense = c.base_defense;
-		this.base_special_attack = c.base_special_attack;
-		this.base_special_defense = c.base_special_defense;
-		this.base_speed = c.base_speed;
-		
-	}
-
-	public Pokemon copy() {
-		return new Pokemon(this);
+		super();
 	}
 	
-	// Set a pokemon's individual IV values when added to a party
-	public void setIVValues()
+	public void assignRandomMoves(ArrayList<Move> movedex)
+	{
+		int num;
+		
+		/* Pick 4 random ints positions in the pokemons's learnable_movs list
+		 * The integer positions map to the corresponding tm_no when using the movedex
+		 * to grab the moves
+		 */
+		ArrayList<Integer> random_moves = new ArrayList<>();
+		for (int i = 0; i < 4; i++)
+		{
+			// Random a number NOT already selected
+			num = (int)(Math.random() * learnable_moves.size());
+			while(random_moves.contains(learnable_moves.get(num)))
+			{
+				num = (int)(Math.random() * learnable_moves.size());
+			}
+			random_moves.add(learnable_moves.get(num));
+		}
+		
+		for(int i = 0; i < 4; i++)
+		{
+			for(Move move : movedex)
+			{
+				if(move.getTm_no() == random_moves.get(i))
+				{
+					learnMove(move.copy(), i);
+				}
+			}
+		}
+	}
+	
+	public abstract Pokemon copy();
+	
+	// Set up variables that define individual pokemon
+	public void setIV_Values()
 	{
 		// Randomize the IV values (Between 0 and 31)
 		for (int i = 0; i < 6; i++)
@@ -124,7 +131,7 @@ public class Pokemon implements Serializable{
 	// Displays full detailed information about the pokemon
 	public void displayInformation()
 	{
-		System.out.print("Dex No: " + this.pokedex_number + "\t" + this.name);
+		System.out.print("\nDex No: " + this.pokedex_number + "\t" + this.name);
 		if(this.nickname == null) System.out.println();
 		else System.out.println(" '" + this.nickname + "' ");
 		System.out.println("LVL: " + this.level +  "\t\tHP: " + this.current_hp + " / " + this.current_max_hp);

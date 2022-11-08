@@ -1,8 +1,14 @@
 package trainer;
 import pokemon.Pokemon;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Trainer {
+public class Trainer implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String name;
 	ArrayList<Pokemon> party = new ArrayList<>();
 	
@@ -16,7 +22,7 @@ public class Trainer {
 		party.add(pokemon);
 	}
 	
-	public void displayParty()
+	public void displayPartyDetailed()
 	{
 		System.out.println("\n" + this.name + "'s Party");
 		for(Pokemon pokemon : party)
@@ -26,6 +32,15 @@ public class Trainer {
 		System.out.println();
 	}
 
+	public void displayPartyBasic()
+	{
+		System.out.println("\n" + this.name + "'s Party");
+		for(int i = 0; i < party.size(); i++)
+		{
+			System.out.println((i+1) + ". " + party.get(i).getName());
+		}
+		System.out.println();
+	}
 	public String getName() {
 		return name;
 	}
